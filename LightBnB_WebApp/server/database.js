@@ -18,22 +18,12 @@ const pool = new Pool({
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function(email) {
-  // let user;
-  // for (const userId in users) {
-  //   user = users[userId];
-  //   if (user.email.toLowerCase() === email.toLowerCase()) {
-  //     break;
-  //   } else {
-  //     user = null;
-  //   }
-  // }
-  // return Promise.resolve(user);
+
   const queryString = `
   SELECT *
   FROM users
   WHERE users.email = $1;
-  `
-
+  `;
 
   return pool.query(queryString, [`${email}`])
     .then(res => {if (res.rows) {
@@ -53,21 +43,12 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function(id) {
-  // let user;
-  // for (const userID in users) {
-  //   user = users[userID];
-  //   if (user.id === id) {
-  //     break;
-  //   } else {
-  //     user = NULL;
-  //   }
-  // }
-  // return Promise.resolve(users[id]);
+
   const queryString = `
   SELECT *
   FROM users
   WHERE users.id = $1
-  `
+  `;
 
   return pool.query(queryString, [`${id}`])
     .then(res => {if (res.rows) {
@@ -88,10 +69,7 @@ exports.getUserWithId = getUserWithId;
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser =  function(user) {
-  // const userId = Object.keys(users).length + 1;
-  // user.id = userId;
-  // users[userId] = user;
-  // return Promise.resolve(user);
+
   const queryString = `
   INSERT INTO users (name, email, password)
   VALUES ($1, $2, $3)
@@ -150,16 +128,6 @@ exports.getAllReservations = getAllReservations;
 
 
 const getAllProperties = (options, limit = 10) => {
-  // return pool
-  //   .query(`SELECT * FROM properties LIMIT $1`, [limit])
-  //   .then((result) => {
-  //     //console.log(result.rows);
-  //     return result.rows;
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message);
-  //   });
-
   //1 Setup an array to hold any parameters that may be available for the query.
   const queryParams = [];
 
@@ -211,7 +179,7 @@ const getAllProperties = (options, limit = 10) => {
   `;
 
   //5 Console log everything just to check
-  console.log(queryString, queryParams);
+  //console.log(queryString, queryParams);
 
   //6 Run the query.
   return pool.query(queryString, queryParams).then((res) => res.rows);
@@ -227,10 +195,6 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
-  // const propertyId = Object.keys(properties).length + 1;
-  // property.id = propertyId;
-  // properties[propertyId] = property;
-  // return Promise.resolve(property);
 
   const queryString = `
   INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_code)
